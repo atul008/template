@@ -1,0 +1,36 @@
+ext.env = project.hasProperty('env') ? project.env : 'dev'
+
+println "############## Building for environment $env ################ "
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+sourceSets {
+   main {
+      resources {
+         srcDir "src/main/java/resources/$env"
+      }
+   }
+}
